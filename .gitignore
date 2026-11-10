@@ -226,6 +226,10 @@ data/raw/*.parquet
 data/processed/*.csv
 data/processed/*.parquet
 
+# Исключения для отслеживания пустых папок
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
 models/
 *.pkl
 *.cbm
