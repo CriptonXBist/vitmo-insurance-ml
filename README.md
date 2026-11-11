@@ -16,7 +16,7 @@
 | **Data Engineer** | Александр | EDA, Feature Engineering, отбор признаков |
 | **ML Engineer** | Павел | Обучение моделей, подбор гиперпараметров |
 | **MLOps** | Михаил | API, Docker, MLflow, деплой |
-| **Frontend / Docs** | Екатерина | UI (Streamlit), визуализация |
+| **Frontend** | Екатерина | UI (Streamlit), визуализация |
 
 ---
 
