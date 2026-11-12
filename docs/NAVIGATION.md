@@ -63,6 +63,43 @@
 | `metrics.py` | Расчёт целевой метрики (`f1_score` для класса 1), поиск оптимального порога классификации. |
 | `modeling.py` | Обучение моделей, кросс-валидация (`StratifiedKFold`), подбор гиперпараметров. |
 
+`src/config.py`
+
+Что делает: Хранит все глобальные константы и список финальных признаков.
+Содержимое: HOLD_OUT_SIZE = 1_000_000, TARGET_COL = 'Response', POSITIVE_CLASS = 1, N_FOLDS = 5, RANDOM_SEED = 42, а также список из 15 финальных фичей (FINAL_FEATURES).
+
+`src/preprocessing.py`
+
+Что делает: Отвечает за загрузку данных, оптимизацию памяти и честное разделение на train/test.
+Содержимое:
+safe_downcast(): сжимает типы данных (int8/16/32, float32, category) для экономии ОЗУ.
+load_and_split(): читает CSV, применяет downcast, жестко отрезает последние 1 000 000 строк в test_df (без таргета), удаляет колонку id.
+
+`src/features.py`
+
+Что делает: Реализует весь Feature Engineering, превращающий сырые данные в 15 финальных признаков.
+Содержимое:
+target_encode_kfold(): Target Encoding для Region_Code и Policy_Sales_Channel со сглаживанием (smoothing=10) и защитой от leakage через StratifiedKFold.
+encode_categoricals(): Ручное кодирование: Vehicle_Age (порядковое 0,1,2), Vehicle_Damage и Gender (бинарное 0/1).
+group_rare_categories(): Группировка редких категорий (<1%) в класс 'Other'.
+(Также сюда логически относятся агрегации Prem_mean_*/Prem_std_* и взаимодействия Prem_per_Age/Age_x_Vintage, которые можно вынести в отдельную функцию create_interactions).
+
+`src/metrics.py`
+
+Что делает: Содержит функции для оценки качества модели строго по требованиям ТЗ.
+Содержимое:
+f1_positive(): расчет F1-score строго для класса 1 (pos_label=1).
+find_best_threshold(): поиск оптимального порога классификации через precision_recall_curve для максимизации F1 на валидации.
+
+`src/modeling.py`
+
+Что делает: Отвечает за инициализацию и обучение моделей.
+Содержимое:
+get_catboost_model(): возвращает настроенный CatBoostClassifier (iterations=1000, lr=0.05, depth=6, auto_class_weights='Balanced', eval_metric='F1', random_seed=63).
+Заготовка под функцию кросс-валидации (evaluate_cv), которая прогоняет модель по фолдам и считает средний F1.
+
+
+
 ---
 
 ## `api/` — Backend (API)
