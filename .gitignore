@@ -262,3 +262,28 @@ clearml/
 
 # ===== Презентация =====
 presentation/*.pptx
+
+# ===== Модели и артефакты (НЕ КОММИТИМ) =====
+models/
+*.pkl
+*.cbm
+*.onnx
+*.joblib
+
+# ===== Виртуальное окружение и кэш =====
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+.ipynb_checkpoints/
+
+# ===== IDE и OS =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ===== Отчеты EDA =====
+eda_report.html
