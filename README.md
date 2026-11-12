@@ -22,12 +22,25 @@
 
 ## Данные
 
-- **Источник:** 
-- **Обучающая выборка:** 
-- **Тестовая выборка (Hold-out):** 
-- **Целевой класс:** 
+- **Источник:** [Kaggle Playground Series S4E7](https://www.kaggle.com/competitions/playground-series-s4e7/data?select=train.csv) + Яндекс.Диск
+- **Исходный файл:** `train.csv` (~600 МБ, ~11.5M строк)
+- **Обучающая выборка:** `data/processed/train_final.parquet` (~10.5M строк)
+- **Тестовая выборка (Hold-out):** `data/processed/test_final.parquet` (последние 1 000 000 строк)
+- **Целевая переменная:** `Response` (`1` — купил страховку, `0` — нет)
+- **Баланс классов:** класс `1` ≈ 12.3% (дисбаланс 1:7)
 
-> ⚠️ Датасеты не хранятся в репозитории. Инструкция по получению — в (docs/data_setup.md)
+> ⚠️ Датасеты **не хранятся в Git** (размер >100 МБ). Инструкция по получению — в `data/DATA_SETUP.md`.
 
 ---
 
+## Быстрый старт
+
+### 1. Получение данных
+
+```bash
+# 1. Скачайте исходный датасет по ссылке из data/DATA_SETUP.md
+# 2. Поместите train.csv в data/raw/
+
+# 3. Запустите ноутбук для генерации финальных файлов:
+jupyter notebook notebooks/01_eda.ipynb
+jupyter notebook notebooks/02_feature_engineering.ipynb
