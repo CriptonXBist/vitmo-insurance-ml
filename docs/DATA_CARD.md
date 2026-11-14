@@ -51,8 +51,8 @@ reports/: heatmap + multicollinearity_*.csv + target_corr_*.csv для всех 
 Мультиколлинеарность |r|≥0.9: только 1 пара в v2_ohe, в остальных 0.
 
 ## 6. Варианты датасетов 
-Папка: data_versions/
-Скачать архив: https://disk.yandex.ru/d/Z5rxxwMp43ZYMw
-Распаковать в корень репозитория, переместить в папку data_versions/
-Состав: v1_te / v2_ohe / v3_freq / v4_woe / v5_benchmark (+ *_test) и test_locked.parquet.
-Способы работы с датасетами задаются функциями в файле src.data_utils
+- Папка: data_versions/
+- Скачать архив: https://disk.yandex.ru/d/Z5rxxwMp43ZYMw
+- Распаковать в корень репозитория, переместить в папку data_versions/
+- Состав: v1_te / v2_ohe / v3_freq / v4_woe / v5_benchmark (+ *_test) и test_locked.parquet.
+- Способы работы с датасетами задаются функциями в файле src.data_utils
