@@ -6,9 +6,7 @@ def get_cv_folds(df, target_col='Response', n_splits=5, random_state=42):
     Разбивает датасет на фолды для кросс-валидации строго в оперативной памяти.
     Возвращает список словарей вида: {'fold_id': int, 'train': DataFrame, 'valid': DataFrame}
     """
-    print(f"🚀 Генерация {n_splits} фолдов стратифицированной кросс-валидации в RAM...")
     skf = StratifiedKFold(n_splits=n_splits, shuffle=True, random_state=random_state)
-    
     folds = []
     for fold_num, (train_idx, val_idx) in enumerate(skf.split(df, df[target_col])):
         df_train = df.iloc[train_idx].copy()
