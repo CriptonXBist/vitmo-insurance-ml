@@ -14,6 +14,11 @@ TARGET_COL = "Response"
 POSITIVE_CLASS = 1
 RANDOM_SEED = 42
 N_FOLDS = 5
+RARE_THRESHOLD = 0.01 # доля категории, ниже которой она уходит в 'Other'
+CORR_THRESHOLD = 0.90 # порог мультиколлинеарности
+
+# --- Категориальные признаки с высоким кардиналом ---
+CAT_COLS = ["Region_Code", "Policy_Sales_Channel"]
 
 # Финальный список из 15 признаков (Driving_License и id исключены)
 FINAL_FEATURES = [
@@ -24,3 +29,13 @@ FINAL_FEATURES = [
     'Prem_per_Age', 'Age_x_Vintage',
     'Vehicle_Age_enc', 'Vehicle_Damage_enc', 'Gender_enc'
 ]
+
+# --- Варианты обработанных датасетов (parquet в PROCESSED_DATA_DIR) ---
+VARIANTS = {
+    "v1_te":        {"train": "v1_te.parquet",        "test": "v1_te_test.parquet",        "cat_features": []},
+    "v2_ohe":       {"train": "v2_ohe.parquet",       "test": "v2_ohe_test.parquet",       "cat_features": []},
+    "v3_freq":      {"train": "v3_freq.parquet",      "test": "v3_freq_test.parquet",      "cat_features": []},
+    "v4_woe":       {"train": "v4_woe.parquet",       "test": "v4_woe_test.parquet",       "cat_features": []},
+    "v5_benchmark": {"train": "v5_benchmark.parquet", "test": "v5_benchmark_test.parquet",
+                     "cat_features": list(CAT_COLS)},
+}
