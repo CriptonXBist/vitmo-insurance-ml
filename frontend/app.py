@@ -37,9 +37,29 @@ if submitted:
     }
 
     try:
-        response = requests.post(f"{API_URL}/predict", json=payload, timeout=10)
+        with st.spinner("Запрашиваем прогноз..."):
+            response = requests.post(
+                f"{API_URL.rstrip('/')}/predict",
+                json=payload,
+                timeout=10,
+            )
         response.raise_for_status()
         result = response.json()
-        st.metric("Вероятность покупки", f"{result['probability']:.1%}")
+        probability = result.get("probability")
+
+        if not isinstance(probability, (int, float)) or not 0 <= probability <= 1:
+            st.error("API вернул некорректный формат прогноза.")
+        else:
+            st.metric("Вероятность покупки", f"{probability:.1%}")
+    except requests.HTTPError as exc:
+        detail = str(exc)
+        if exc.response is not None:
+            try:
+                detail = exc.response.json().get("detail", detail)
+            except ValueError:
+                detail = exc.response.text or detail
+        st.error(f"API вернул ошибку: {detail}")
     except requests.RequestException as exc:
         st.error(f"Не удалось получить прогноз от API: {exc}")
+    except ValueError:
+        st.error("API вернул ответ, который не удалось прочитать.")
